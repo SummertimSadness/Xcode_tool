@@ -10,11 +10,15 @@
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>#ifdef DEBUG
-#define debugLog(...) NSLog(__VA_ARGS__)
-#define debugMethod() NSLog(@"%s", __func__)
+#define debugLog(s, ... ) do {                                                                          \
+fprintf(stderr, "&lt;%s : %d&gt; %s\n",                                           \
+[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
+__LINE__, __func__);                                                        \
+(NSLog)((format), ##__VA_ARGS__);                                           \
+fprintf(stderr, "-------\n");                                               \
+} while (0)
 #else
-#define debugLog(...)
-#define debugMethod()
+#define debugLog(s, ... )
 #endif
 
 #define EMPTY_STRING        @""
@@ -29,7 +33,7 @@
 #define UI_NAVIGATION_BAR_HEIGHT    44
 #define UI_TAB_BAR_HEIGHT           49
 #define UI_STATUS_BAR_HEIGHT        20
-#define UI_SCREEN_WIDTH             320
+#define UI_SCREEN_WIDTH             ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT            ([[UIScreen mainScreen] bounds].size.height)
 
 #define UI_LABEL_LENGTH             200
@@ -59,13 +63,14 @@
  ...
  }
  
- */</string>
+ */
+</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>20888CE5-13E0-4B11-9BE3-4EEEB93DB277</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Objective-C</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>TQ Macro Utils</string>
+	<string>tq_macro_utils</string>
 	<key>IDECodeSnippetTitle</key>
 	<string>TQ Macro Utils</string>
 	<key>IDECodeSnippetUserSnippet</key>
